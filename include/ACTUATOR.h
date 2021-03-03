@@ -13,12 +13,6 @@
 #define DEFAULT_MIN_FEEDBACK_VAL 0
 #define DEFAULT_MAX_FEEDBACK_VAL 1023
 
-// extern int p_Num_Pulse;
-// extern uint32_t p_Last_Pulse_Time;
-// extern uint32_t p_Debounce_Time; // 500 microseconds
-
-// void ISR_Flag();
-
 class Actuator
 {
   public:
