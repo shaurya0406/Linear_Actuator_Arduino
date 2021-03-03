@@ -12,7 +12,7 @@
 #define FEEDBACK_TYPE_HALL_SENSOR 0
 #define DEFAULT_MIN_FEEDBACK_VAL 0
 #define DEFAULT_MAX_FEEDBACK_VAL 1023
-
+#define DEFAULT_PULSE_PER_INCH 500
 class Actuator
 {
   public:
@@ -20,12 +20,13 @@ class Actuator
     Actuator(int In1pin, int In2pin, int PWMpin, int offset, int STBYpin);
 
     void ISR_Flag_Callback();
+
     // Drive in direction given by sign, at speed given by magnitude of the
-	//parameter.
+	//parameter and default = 255 i.e full speed
     int drive(int speed = DEFAULTSPEED);
 
-	// drive(), but with a delay(duration)
-    void drive(int speed,int duration);
+	// drive() upto a distance in Inches
+    void drive(int speed,int distance);
 
 	//currently not implemented
     //void stop();           // Stop motors, but allow them to coast to a halt.
@@ -38,7 +39,7 @@ class Actuator
 	void standby();
     
     void reset(int speed = DEFAULTSPEED);
-    void Attach_FeedBack(int Type,const int FeedBack_Pin,int Min = DEFAULT_MIN_FEEDBACK_VAL, int Max = DEFAULT_MAX_FEEDBACK_VAL);
+    void Attach_FeedBack(int Type,const int FeedBack_Pin,int Min = DEFAULT_MIN_FEEDBACK_VAL, int Max = DEFAULT_MAX_FEEDBACK_VAL, int PPI = DEFAULT_PULSE_PER_INCH);
     int read();
 
   private:
@@ -46,7 +47,7 @@ class Actuator
 	int In1, In2, PWM, Offset,Standby;
     //other private variables
     bool p_FeedBack_Attached;
-    int p_type, p_feedBack_pin, p_min, p_max;
+    int p_type, p_feedBack_pin, p_min, p_max, p_ppi;
     int p_Pos = 0;
     int p_Prev_Pos = 0;
     int p_Num_Pulse;

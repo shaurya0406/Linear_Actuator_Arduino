@@ -78,10 +78,14 @@ int Actuator::drive(int speed)
    }
    return -1;
 }
-void Actuator::drive(int speed, int duration)
+void Actuator::drive(int speed, int distance)
 {
-  drive(speed);
-  delay(duration);
+   int x = distance*p_ppi; // Inches to (no: of puses)
+   if(x>p_Pos && x!=p_Pos)
+      drive(speed);
+   else if(x<p_Pos && x!=p_Pos)
+      drive(-speed);
+   else brake();
 }
 
 void Actuator::extend(int speed)
@@ -109,10 +113,10 @@ void Actuator::standby()
 {
    digitalWrite(Standby, LOW);
 }
-void Actuator::Attach_FeedBack(int Type, const int FeedBack_Pin, int Min, int Max)
+void Actuator::Attach_FeedBack(int Type, const int FeedBack_Pin, int Min, int Max, int PPI)
 {
    p_FeedBack_Attached = true;
-   p_max = Max; p_min = Min;
+   p_max = Max; p_min = Min; p_ppi = PPI;
    if(Type == FEEDBACK_TYPE_HALL_SENSOR)
    {
       p_type = FEEDBACK_TYPE_HALL_SENSOR;
