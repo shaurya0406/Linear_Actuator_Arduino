@@ -5,11 +5,13 @@
 #include "ACTUATOR.H"
 #include <Arduino.h>
 
-int p_Num_Pulse;
-uint32_t p_Last_Pulse_Time;
-uint32_t p_Debounce_Time; // 500 microseconds
-
+Actuator actuator(0,0,0,0,0); //Singleton Class
 void ISR_Flag()
+{
+   actuator.ISR_Flag_Callback();
+}
+
+void Actuator::ISR_Flag_Callback()
 {
     if(micros()-p_Last_Pulse_Time > p_Debounce_Time)
     {
