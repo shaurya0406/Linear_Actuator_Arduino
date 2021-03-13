@@ -80,7 +80,7 @@ int Actuator::drive(int speed)
 }
 void Actuator::drive(int speed, int distance)
 {
-   int x = distance*p_ppi; // Inches to (no: of puses)
+   int x = distance*p_ppi; // Inches to (no: of pulses)
    if(x>p_Pos && x!=p_Pos)
       drive(speed);
    else if(x<p_Pos && x!=p_Pos)
